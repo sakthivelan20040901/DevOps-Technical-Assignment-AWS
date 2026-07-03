@@ -1,7 +1,34 @@
-venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+
+# Environment Variables
 .env
-*.pem
+
+# Logs
 *.log
+
+# IDE
 .vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# AWS Keys
+*.pem
+*.key
+
+# Python cache
+.pytest_cache/
+
+# Terraform (future)
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
