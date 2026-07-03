@@ -504,8 +504,8 @@ This project demonstrates practical experience with:
 
 DevOps Engineer Candidate
 
-* GitHub: `https://github.com/YOUR_USERNAME`
-* LinkedIn: `https://linkedin.com/in/YOUR_PROFILE`
+
+* LinkedIn: `https://linkedin.com/in/sakthivelan-k`
 
 ---
 
