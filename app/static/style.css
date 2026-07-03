@@ -1,0 +1,37 @@
+body{
+    margin:0;
+    background:#f4f7fb;
+    font-family:Arial, sans-serif;
+}
+
+.container{
+    width:90%;
+    margin:auto;
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+    color:#1e88e5;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+}
+
+.system-card{
+    margin-top:20px;
+}
+
+p{
+    font-size:18px;
+}

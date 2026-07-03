@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Monitoring Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🚀 DevOps Monitoring Dashboard</h1>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>❤️ Health</h2>
+            <p id="health">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>💻 CPU Usage</h2>
+            <p id="cpu">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>🧠 Memory</h2>
+            <p id="memory">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>💾 Disk</h2>
+            <p id="disk">Loading...</p>
+        </div>
+
+    </div>
+
+    <div class="card system-card">
+        <h2>🖥️ System Information</h2>
+
+        <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+        <p><strong>OS:</strong> <span id="os"></span></p>
+        <p><strong>Release:</strong> <span id="release"></span></p>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
