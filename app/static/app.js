@@ -1,17 +1,16 @@
-// ================================
+// ======================================
 // DevOps Monitoring Dashboard
-// ================================
+// ======================================
 
-// Return status text based on percentage
-function getStatus(value){
+function getStatus(value) {
 
-    if(value < 30)
+    if (value < 30)
         return "🟢 Healthy";
 
-    if(value < 60)
+    if (value < 60)
         return "🟡 Normal";
 
-    if(value < 80)
+    if (value < 80)
         return "🟠 Warning";
 
     return "🔴 Critical";
@@ -19,161 +18,135 @@ function getStatus(value){
 }
 
 
-// Change card color based on value
-function setCardColor(cardId,value){
+function setCardColor(cardId, value) {
 
-    const card=document.getElementById(cardId);
+    const card = document.getElementById(cardId);
 
-    card.classList.remove(
-        "low",
-        "medium",
-        "high",
-        "critical"
-    );
+    card.classList.remove("low", "medium", "high", "critical");
 
-    if(value < 30){
-
+    if (value < 30)
         card.classList.add("low");
 
-    }
-    else if(value < 60){
-
+    else if (value < 60)
         card.classList.add("medium");
 
-    }
-    else if(value < 80){
-
+    else if (value < 80)
         card.classList.add("high");
 
-    }
-    else{
-
+    else
         card.classList.add("critical");
-
-    }
 
 }
 
 
-// ================================
-// Load Dashboard
-// ================================
+// =========================
+// Dashboard
+// =========================
 
-async function loadDashboard(){
+async function loadDashboard() {
 
-    try{
+    try {
 
         // Health
 
-        const health = await (await fetch("/health")).json();
+        const health = await fetch("/health").then(r => r.json());
 
-        document.getElementById("health").innerHTML = health.status;
+        document.getElementById("health").textContent = health.status;
 
-        const healthCard=document.getElementById("health-card");
+        const healthCard = document.getElementById("health-card");
 
-        if(health.status==="UP"){
-
-            healthCard.style.borderLeft="8px solid #22c55e";
-
-        }else{
-
-            healthCard.style.borderLeft="8px solid red";
-
-        }
-
+        if (health.status === "UP")
+            healthCard.style.borderLeft = "8px solid #22c55e";
+        else
+            healthCard.style.borderLeft = "8px solid red";
 
 
         // CPU
 
-        const cpu = await (await fetch("/cpu")).json();
+        const cpu = await fetch("/cpu").then(r => r.json());
 
-        document.getElementById("cpu").innerHTML =
-            cpu.cpu.toFixed(1)+" %";
+        document.getElementById("cpu").textContent =
+            cpu.cpu.toFixed(1) + "%";
 
-        document.getElementById("cpu-status").innerHTML =
+        document.getElementById("cpu-status").textContent =
             getStatus(cpu.cpu);
 
         document.getElementById("cpu-progress").style.width =
-            cpu.cpu+"%";
+            cpu.cpu + "%";
 
-        setCardColor("cpu-card",cpu.cpu);
-
+        setCardColor("cpu-card", cpu.cpu);
 
 
         // Memory
 
-        const memory = await (await fetch("/memory")).json();
+        const memory = await fetch("/memory").then(r => r.json());
 
-        document.getElementById("memory").innerHTML =
-            memory.percent+" %";
+        document.getElementById("memory").textContent =
+            memory.percent + "%";
 
-        document.getElementById("memory-status").innerHTML =
+        document.getElementById("memory-status").textContent =
             getStatus(memory.percent);
 
         document.getElementById("memory-progress").style.width =
-            memory.percent+"%";
+            memory.percent + "%";
 
-        setCardColor("memory-card",memory.percent);
-
+        setCardColor("memory-card", memory.percent);
 
 
         // Disk
 
-        const disk = await (await fetch("/disk")).json();
+        const disk = await fetch("/disk").then(r => r.json());
 
-        document.getElementById("disk").innerHTML =
-            disk.percent+" %";
+        document.getElementById("disk").textContent =
+            disk.percent + "%";
 
-        document.getElementById("disk-status").innerHTML =
+        document.getElementById("disk-status").textContent =
             getStatus(disk.percent);
 
         document.getElementById("disk-progress").style.width =
-            disk.percent+"%";
+            disk.percent + "%";
 
-        setCardColor("disk-card",disk.percent);
-
+        setCardColor("disk-card", disk.percent);
 
 
         // System
 
-        const system = await (await fetch("/system")).json();
+        const system = await fetch("/system").then(r => r.json());
 
-        document.getElementById("hostname").innerHTML =
+        document.getElementById("hostname").textContent =
             system.hostname;
 
-        document.getElementById("os").innerHTML =
+        document.getElementById("os").textContent =
             system.os;
 
-        document.getElementById("release").innerHTML =
+        document.getElementById("release").textContent =
             system.release;
-
 
 
         // Stress Status
 
-        const stress = await (await fetch("/stress/status")).json();
+        const stress = await fetch("/stress/status").then(r => r.json());
 
-        const badge=document.getElementById("stress-status");
+        const badge = document.getElementById("stress-status");
 
-        if(stress.running){
+        if (stress.running) {
 
-            badge.innerHTML="🟢 Running";
+            badge.innerHTML = "🟢 Running";
 
-            badge.className="running";
+            badge.className = "running";
 
-        }
-        else{
+        } else {
 
-            badge.innerHTML="⚪ Idle";
+            badge.innerHTML = "⚪ Idle";
 
-            badge.className="idle";
+            badge.className = "idle";
 
         }
 
     }
-    catch(err){
+    catch (err) {
 
-        console.error(err);
+        console.error("Dashboard Error:", err);
 
     }
 
@@ -181,28 +154,40 @@ async function loadDashboard(){
 
 
 
-// ================================
-// Start Stress Test
-// ================================
+// =========================
+// Start Stress
+// =========================
 
-async function startStress(){
+async function startStress() {
 
-    try{
+    try {
 
-        const response=await fetch("/stress/start",{
+        const response = await fetch("/stress/start", {
 
-            method:"POST"
+            method: "POST"
 
         });
 
-        const result=await response.json();
+        const text = await response.text();
+
+        console.log("Server Response:", text);
+
+        if (!response.ok) {
+
+            alert("Backend Error\n\n" + text);
+
+            return;
+
+        }
+
+        const result = JSON.parse(text);
 
         alert(result.message);
 
         loadDashboard();
 
     }
-    catch(err){
+    catch (err) {
 
         console.error(err);
 
@@ -214,28 +199,40 @@ async function startStress(){
 
 
 
-// ================================
-// Stop Stress Test
-// ================================
+// =========================
+// Stop Stress
+// =========================
 
-async function stopStress(){
+async function stopStress() {
 
-    try{
+    try {
 
-        const response=await fetch("/stress/stop",{
+        const response = await fetch("/stress/stop", {
 
-            method:"POST"
+            method: "POST"
 
         });
 
-        const result=await response.json();
+        const text = await response.text();
+
+        console.log("Server Response:", text);
+
+        if (!response.ok) {
+
+            alert("Backend Error\n\n" + text);
+
+            return;
+
+        }
+
+        const result = JSON.parse(text);
 
         alert(result.message);
 
         loadDashboard();
 
     }
-    catch(err){
+    catch (err) {
 
         console.error(err);
 
@@ -247,10 +244,10 @@ async function stopStress(){
 
 
 
-// ================================
-// Auto Refresh
-// ================================
+// =========================
+// Refresh
+// =========================
 
 loadDashboard();
 
-setInterval(loadDashboard,2000);
+setInterval(loadDashboard, 2000);
