@@ -2,44 +2,65 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 DevOps Monitoring Dashboard</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>DevOps Monitoring Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>🚀 DevOps Monitoring Dashboard</h1>
+    <!-- ================================= -->
+    <!-- HEADER -->
+    <!-- ================================= -->
 
-    <div class="grid">
+    <header>
 
-        <!-- Health -->
-        <div class="card" id="health-card">
+        <h1>🚀 DevOps Monitoring Dashboard</h1>
 
-            <h2>❤️ Health Status</h2>
+        <div class="time-box">
 
-            <p class="value" id="health">
+            <span id="server-time">
                 Loading...
-            </p>
+            </span>
 
         </div>
 
-        <!-- CPU -->
+    </header>
+
+
+    <!-- ================================= -->
+    <!-- TOP METRIC CARDS -->
+    <!-- ================================= -->
+
+    <section class="grid">
+
+        <div class="card" id="health-card">
+
+            <h3>❤️ Health</h3>
+
+            <h1 id="health">--</h1>
+
+        </div>
+
         <div class="card" id="cpu-card">
 
-            <h2>💻 CPU Usage</h2>
+            <h3>💻 CPU Usage</h3>
 
-            <p class="value" id="cpu">
-                Loading...
-            </p>
+            <h1 id="cpu">0%</h1>
 
-            <p id="cpu-status">
-                Healthy
-            </p>
+            <p id="cpu-status"></p>
 
             <div class="progress">
 
@@ -49,18 +70,13 @@
 
         </div>
 
-        <!-- Memory -->
         <div class="card" id="memory-card">
 
-            <h2>🧠 Memory Usage</h2>
+            <h3>🧠 Memory Usage</h3>
 
-            <p class="value" id="memory">
-                Loading...
-            </p>
+            <h1 id="memory">0%</h1>
 
-            <p id="memory-status">
-                Healthy
-            </p>
+            <p id="memory-status"></p>
 
             <div class="progress">
 
@@ -70,18 +86,13 @@
 
         </div>
 
-        <!-- Disk -->
         <div class="card" id="disk-card">
 
-            <h2>💾 Disk Usage</h2>
+            <h3>💾 Disk Usage</h3>
 
-            <p class="value" id="disk">
-                Loading...
-            </p>
+            <h1 id="disk">0%</h1>
 
-            <p id="disk-status">
-                Healthy
-            </p>
+            <p id="disk-status"></p>
 
             <div class="progress">
 
@@ -91,27 +102,175 @@
 
         </div>
 
-    </div>
+    </section>
 
-    <!-- System Information -->
 
-    <div class="card system-card">
 
-        <h2>🖥️ System Information</h2>
+    <!-- ================================= -->
+    <!-- LIVE CHARTS -->
+    <!-- ================================= -->
 
-        <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+    <section class="chart-grid">
 
-        <p><strong>Operating System:</strong> <span id="os"></span></p>
+        <div class="chart-card">
 
-        <p><strong>Kernel Release:</strong> <span id="release"></span></p>
+            <h2>CPU Usage</h2>
 
-    </div>
+            <canvas id="cpuChart"></canvas>
 
-    <!-- Stress Testing -->
+        </div>
 
-    
+        <div class="chart-card">
+
+            <h2>Memory Usage</h2>
+
+            <canvas id="memoryChart"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <h2>Disk Usage</h2>
+
+            <canvas id="diskChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- SYSTEM INFORMATION -->
+    <!-- ================================= -->
+
+    <section class="bottom-grid">
+
+        <div class="info-card">
+
+            <h2>🖥 System Information</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Hostname</td>
+
+                    <td id="hostname"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Operating System</td>
+
+                    <td id="os"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Kernel</td>
+
+                    <td id="release"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Python</td>
+
+                    <td id="python"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Uptime</td>
+
+                    <td id="uptime"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Public IP</td>
+
+                    <td id="public-ip"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- ================================= -->
+        <!-- SERVICES -->
+        <!-- ================================= -->
+
+        <div class="info-card">
+
+            <h2>🟢 Service Status</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Flask</td>
+
+                    <td id="flask-status"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Gunicorn</td>
+
+                    <td id="gunicorn-status"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Nginx</td>
+
+                    <td id="nginx-status"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- FOOTER -->
+    <!-- ================================= -->
+
+    <footer>
+
+        <p>
+
+            Last Updated :
+
+            <span id="last-updated">
+
+                --
+
+            </span>
+
+        </p>
+
+    </footer>
 
 </div>
+
+
 
 <script src="{{ url_for('static', filename='app.js') }}"></script>
 
