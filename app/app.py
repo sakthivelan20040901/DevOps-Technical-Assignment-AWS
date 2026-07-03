@@ -6,6 +6,7 @@ import subprocess
 import requests
 import time
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -102,7 +103,7 @@ def get_system_metrics():
         "release": platform.release(),
         "python": platform.python_version(),
         "uptime": get_uptime(),
-        "server_time": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+        "server_time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%d-%m-%Y %H:%M:%S %Z"),
         "public_ip": get_public_ip(),
         "services": {
             "flask": "Running",
@@ -176,7 +177,7 @@ def dashboard():
 
             "uptime": get_uptime(),
 
-            "server_time": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            "server_time": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%d-%m-%Y %H:%M:%S %Z"),
 
             "public_ip": get_public_ip()
 
