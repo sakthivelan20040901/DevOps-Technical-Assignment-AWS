@@ -1,47 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Monitoring Dashboard</title>
+    <title>🚀 DevOps Monitoring Dashboard</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
 <div class="container">
 
-    <h1>🚀 DevOps Monitoring Dashboard - CI/CD Working</h1>
+    <h1>🚀 DevOps Monitoring Dashboard</h1>
 
     <div class="grid">
 
-        <div class="card">
-            <h2>❤️ Health</h2>
-            <p id="health">Loading...</p>
+        <!-- Health -->
+        <div class="card" id="health-card">
+
+            <h2>❤️ Health Status</h2>
+
+            <p class="value" id="health">
+                Loading...
+            </p>
+
         </div>
 
-        <div class="card">
+        <!-- CPU -->
+        <div class="card" id="cpu-card">
+
             <h2>💻 CPU Usage</h2>
-            <p id="cpu">Loading...</p>
+
+            <p class="value" id="cpu">
+                Loading...
+            </p>
+
+            <p id="cpu-status">
+                Healthy
+            </p>
+
+            <div class="progress">
+
+                <div id="cpu-progress"></div>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h2>🧠 Memory</h2>
-            <p id="memory">Loading...</p>
+        <!-- Memory -->
+        <div class="card" id="memory-card">
+
+            <h2>🧠 Memory Usage</h2>
+
+            <p class="value" id="memory">
+                Loading...
+            </p>
+
+            <p id="memory-status">
+                Healthy
+            </p>
+
+            <div class="progress">
+
+                <div id="memory-progress"></div>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h2>💾 Disk</h2>
-            <p id="disk">Loading...</p>
+        <!-- Disk -->
+        <div class="card" id="disk-card">
+
+            <h2>💾 Disk Usage</h2>
+
+            <p class="value" id="disk">
+                Loading...
+            </p>
+
+            <p id="disk-status">
+                Healthy
+            </p>
+
+            <div class="progress">
+
+                <div id="disk-progress"></div>
+
+            </div>
+
         </div>
 
     </div>
 
+    <!-- System Information -->
+
     <div class="card system-card">
+
         <h2>🖥️ System Information</h2>
 
         <p><strong>Hostname:</strong> <span id="hostname"></span></p>
-        <p><strong>OS:</strong> <span id="os"></span></p>
-        <p><strong>Release:</strong> <span id="release"></span></p>
+
+        <p><strong>Operating System:</strong> <span id="os"></span></p>
+
+        <p><strong>Kernel Release:</strong> <span id="release"></span></p>
+
+    </div>
+
+    <!-- Stress Testing -->
+
+    <div class="card control">
+
+        <h2>🔥 DevOps Stress Testing</h2>
+
+        <h3 id="stress-status">
+            ⚪ Idle
+        </h3>
+
+        <button class="start" onclick="startStress()">
+
+            ▶ Start Stress Test
+
+        </button>
+
+        <button class="stop" onclick="stopStress()">
+
+            ■ Stop Stress Test
+
+        </button>
+
     </div>
 
 </div>
@@ -49,4 +136,5 @@
 <script src="{{ url_for('static', filename='app.js') }}"></script>
 
 </body>
+
 </html>

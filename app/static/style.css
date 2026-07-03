@@ -1,37 +1,393 @@
-body{
+/* ===========================
+   GLOBAL
+=========================== */
+
+*{
     margin:0;
-    background:#f4f7fb;
-    font-family:Arial, sans-serif;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+
+    color:white;
+
+    min-height:100vh;
+
 }
 
 .container{
-    width:90%;
+
+    width:95%;
+
+    max-width:1400px;
+
     margin:auto;
+
     padding:30px;
+
 }
+
+/* ===========================
+   TITLE
+=========================== */
 
 h1{
+
     text-align:center;
-    color:#1e88e5;
+
+    margin-bottom:30px;
+
+    color:#38bdf8;
+
+    font-size:38px;
+
+    letter-spacing:1px;
+
 }
+
+/* ===========================
+   GRID
+=========================== */
 
 .grid{
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
 }
+
+/* ===========================
+   CARDS
+=========================== */
 
 .card{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 3px 8px rgba(0,0,0,.15);
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    transition:.4s;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+
 }
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+.card h2{
+
+    margin-bottom:15px;
+
+    color:white;
+
+}
+
+/* ===========================
+   VALUES
+=========================== */
+
+.value{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+    transition:.5s;
+
+}
+
+/* ===========================
+   STATUS TEXT
+=========================== */
+
+#cpu-status,
+#memory-status,
+#disk-status{
+
+    margin-top:12px;
+
+    font-weight:bold;
+
+    font-size:18px;
+
+}
+
+/* ===========================
+   PROGRESS BAR
+=========================== */
+
+.progress{
+
+    margin-top:15px;
+
+    width:100%;
+
+    height:14px;
+
+    background:#2b3444;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+}
+
+.progress div{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:50px;
+
+    transition:width .8s ease;
+
+}
+
+/* ===========================
+   CARD COLORS
+=========================== */
+
+.low{
+
+    border-left:8px solid #2196F3;
+
+}
+
+.low .progress div{
+
+    background:#2196F3;
+
+}
+
+.medium{
+
+    border-left:8px solid #4CAF50;
+
+}
+
+.medium .progress div{
+
+    background:#4CAF50;
+
+}
+
+.high{
+
+    border-left:8px solid #FF9800;
+
+}
+
+.high .progress div{
+
+    background:#FF9800;
+
+}
+
+.critical{
+
+    border-left:8px solid #F44336;
+
+    animation:pulse 1s infinite;
+
+}
+
+.critical .progress div{
+
+    background:#F44336;
+
+}
+
+/* ===========================
+   SYSTEM CARD
+=========================== */
 
 .system-card{
-    margin-top:20px;
+
+    margin-top:30px;
+
 }
 
-p{
+.system-card p{
+
+    margin:10px 0;
+
     font-size:18px;
+
+}
+
+/* ===========================
+   STRESS CARD
+=========================== */
+
+.control{
+
+    margin-top:30px;
+
+    text-align:center;
+
+}
+
+.control h3{
+
+    margin:20px 0;
+
+    font-size:24px;
+
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+button{
+
+    padding:14px 24px;
+
+    margin:10px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.start{
+
+    background:#16a34a;
+
+}
+
+.start:hover{
+
+    background:#15803d;
+
+    transform:scale(1.05);
+
+}
+
+.stop{
+
+    background:#dc2626;
+
+}
+
+.stop:hover{
+
+    background:#b91c1c;
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+   STRESS STATUS
+=========================== */
+
+.running{
+
+    color:#22c55e;
+
+    animation:blink 1s infinite;
+
+}
+
+.idle{
+
+    color:#94a3b8;
+
+}
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+
+@keyframes blink{
+
+0%{opacity:1;}
+
+50%{opacity:.3;}
+
+100%{opacity:1;}
+
+}
+
+@keyframes pulse{
+
+0%{
+
+box-shadow:0 0 0 rgba(244,67,54,.6);
+
+}
+
+50%{
+
+box-shadow:0 0 20px rgba(244,67,54,.9);
+
+}
+
+100%{
+
+box-shadow:0 0 0 rgba(244,67,54,.6);
+
+}
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+h1{
+
+font-size:28px;
+
+}
+
+.value{
+
+font-size:32px;
+
+}
+
+button{
+
+width:100%;
+
+margin-top:15px;
+
+}
+
 }
