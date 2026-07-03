@@ -35,6 +35,11 @@ def home():
     return render_template("index.html")
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return ('', 204)
+
+
 @app.route("/health")
 def health():
 
@@ -118,7 +123,7 @@ def start_stress():
 
         subprocess.Popen([
             "/usr/bin/stress",
-            "--cpu", "4",
+            "--cpu", "2",
             "--vm", "2",
             "--vm-bytes", "512M",
             "--hdd", "1",
